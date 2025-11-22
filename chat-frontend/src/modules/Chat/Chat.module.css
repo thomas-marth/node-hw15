@@ -1,0 +1,115 @@
+.wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 18px;
+  border-radius: 8px;
+  background: #f9fafb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.usernameBlock {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  color: #111827;
+}
+
+.input::placeholder {
+  color: #6b7280;
+}
+
+.primaryButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.primaryButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.controlsRow {
+  margin-bottom: 12px;
+}
+
+.sendButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #22c55e;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.sendButtonDisabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.leaveButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.messages {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  padding: 8px;
+  height: 260px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.message {
+  margin-bottom: 6px;
+}
+
+.messageMy {
+  text-align: left;
+}
+
+.messageOther {
+  text-align: right;
+}
+
+.messageSystem {
+  text-align: center;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.empty {
+  text-align: center;
+  color: #9ca3af;
+}
