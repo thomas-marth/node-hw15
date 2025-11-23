@@ -2,19 +2,18 @@ import { useState } from "react";
 import { io } from "socket.io-client";
 
 import styles from "./Chat.module.css";
+import UserConnectForm from "./UserConnectForm/UserConnectForm.jsx";
+import ChatMessageForm from "./ChatMessageForm/ChatMessageForm.jsx";
 
 const { VITE_CHAT_URL } = import.meta.env;
 
 const Chat = () => {
   const [username, setUsername] = useState("");
-  const [tempName, setTempName] = useState("");
   const [socket, setSocket] = useState(null);
-  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const connectToChat = () => {
-    const trimmed = tempName.trim();
-    const name = trimmed || "Anonymous";
+  const handleConnect = ({ username: rawName }) => {
+    const name = rawName.trim() || "Anonymous";
 
     setUsername(name);
 
@@ -59,27 +58,25 @@ const Chat = () => {
     });
   };
 
-  const handleSend = (e) => {
-    e?.preventDefault();
-    if (!message.trim() || !socket) return;
+  const handleSendMessage = ({ message }) => {
+    if (!socket) return;
 
-    const payload = {
-      username,
-      message: message.trim(),
-    };
+    const trimmed = message.trim();
+    if (!trimmed) return;
 
     setMessages((prev) => [
       ...prev,
       {
         id: `my-${Date.now()}`,
         type: "my",
-        text: `${username}: ${message.trim()}`,
+        text: `${username}: ${trimmed}`,
       },
     ]);
 
-    socket.emit("send_message", payload);
-
-    setMessage("");
+    socket.emit("send_message", {
+      username,
+      message: trimmed,
+    });
   };
 
   const handleDisconnect = () => {
@@ -93,28 +90,7 @@ const Chat = () => {
 
   return (
     <div className={styles.wrapper}>
-      {!username && (
-        <div className={styles.usernameBlock}>
-          <label className={styles.label} htmlFor="username">
-            Your name:
-          </label>
-          <input
-            id="username"
-            type="text"
-            placeholder="Enter username"
-            value={tempName}
-            onChange={(e) => setTempName(e.target.value)}
-            className={styles.input}
-          />
-          <button
-            type="button"
-            onClick={connectToChat}
-            className={styles.primaryButton}
-          >
-            Join chat
-          </button>
-        </div>
-      )}
+      {!username && <UserConnectForm onSubmit={handleConnect} />}
 
       {username && (
         <>
@@ -122,37 +98,11 @@ const Chat = () => {
             <strong>Logged in as:</strong> {username}
           </div>
 
-          <form onSubmit={handleSend} className={styles.controlsRow}>
-            <label className={styles.label} htmlFor="message">
-              Message:
-            </label>
-            <input
-              id="message"
-              type="text"
-              placeholder="Type your message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className={styles.input}
-            />
-            <button
-              type="submit"
-              disabled={!socket}
-              className={`${styles.sendButton} ${
-                !socket ? styles.sendButtonDisabled : ""
-              }`}
-            >
-              Send
-            </button>
-            {socket && (
-              <button
-                type="button"
-                onClick={handleDisconnect}
-                className={styles.leaveButton}
-              >
-                Leave chat
-              </button>
-            )}
-          </form>
+          <ChatMessageForm
+            onSubmit={handleSendMessage}
+            socketExists={!!socket}
+            onDisconnect={handleDisconnect}
+          />
 
           <div className={styles.messages}>
             {messages.map((msg) => {

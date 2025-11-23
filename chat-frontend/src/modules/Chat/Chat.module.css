@@ -8,10 +8,6 @@
   box-sizing: border-box;
 }
 
-.usernameBlock {
-  margin-bottom: 16px;
-}
-
 .label {
   display: block;
   margin-bottom: 4px;
@@ -32,6 +28,14 @@
 
 .input::placeholder {
   color: #6b7280;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #6b7280 inset !important;
+  -webkit-text-fill-color: #dbdbdf !important;
 }
 
 .primaryButton {
