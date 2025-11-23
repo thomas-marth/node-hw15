@@ -41,7 +41,8 @@ const Chat = () => {
         {
           id: `${data.username}-${data.message}-${Math.random()}`,
           type: "other",
-          text: `${data.username}: ${data.message}`,
+          text: ` ${data.message}`,
+          username: `${data.username}:`,
         },
       ]);
     });
@@ -69,7 +70,7 @@ const Chat = () => {
       {
         id: `my-${Date.now()}`,
         type: "my",
-        text: `${username}: ${trimmed}`,
+        text: `${trimmed}`,
       },
     ]);
 
@@ -95,7 +96,7 @@ const Chat = () => {
       {username && (
         <>
           <div style={{ marginBottom: "8px" }}>
-            <strong>Logged in as:</strong> {username}
+            <b>Logged in as:</b> {username}
           </div>
 
           <ChatMessageForm
@@ -112,15 +113,11 @@ const Chat = () => {
 
               return (
                 <div key={msg.id} className={`${styles.message} ${className}`}>
+                  <span className={`${styles.username}`}>{msg.username}</span>
                   {msg.text}
                 </div>
               );
             })}
-            {messages.length === 0 && (
-              <div className={`${styles.message} ${styles.empty}`}>
-                No messages yet
-              </div>
-            )}
           </div>
         </>
       )}

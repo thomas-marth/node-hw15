@@ -14,13 +14,7 @@ const webSocketServer = () => {
     console.log("New client connected");
 
     socket.on("send_message", (data) => {
-      console.log(
-        `Message from ${data.username || "Anonymous"}: ${data.message}`,
-      );
-
       socket.broadcast.emit("receive_message", data);
-
-      wsServer.emit("receive_message", data);
     });
 
     socket.on("disconnect", () => {
